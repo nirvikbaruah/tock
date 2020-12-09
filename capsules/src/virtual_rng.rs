@@ -76,6 +76,7 @@ impl<'a> Client for MuxRngMaster<'a> {
         self.inflight.take().map_or(Continue::Done, |device| {
             let cont_code = device.randomness_available(_randomness, _error);
 
+            // Only carry out next operation if no more randomness requested
             if cont_code == Continue::Done {
                 self.do_next_op();
             }
